@@ -1,5 +1,6 @@
 package com.zhuanye.wiki.config;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -13,6 +14,7 @@ import org.springframework.core.env.Environment;
 @ComponentScan("com.zhuanye") //此处写com.zhuanye.wiki也可，不要只写com，会扫描到第三方jar，出错很难排查
 //@ComponentScan({"com.zhuanye"},{com.test}) 支持多个扫描包
 @SpringBootApplication
+@MapperScan("com.zhuanye.wiki.mapper")//mapper持久层扫描包，整个项目如何知道是mapper持久层
 public class WikiApplication {
     private static final Logger LOG = LoggerFactory.getLogger(WikiApplication.class);
 

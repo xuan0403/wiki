@@ -11,3 +11,5 @@ create table `ebook` (
   `vote_count` int not null default 0 comment '点赞数',
   primary key (`id`)
 ) engine=innodb default charset=utf8mb4 comment='电子书';
+
+insert into `test` (id, name, password) values (1, '测试', 1);
