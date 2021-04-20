@@ -4,10 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.Environment;
-import org.springframework.scheduling.annotation.EnableAsync;
-import org.springframework.scheduling.annotation.EnableScheduling;
+
 
 //启动日志
 //打印自定义配置信息，打印欢迎页，测试地址，或者提示性方案等等
@@ -25,5 +23,4 @@ public class WikiApplication {
         LOG.info("地址: \thttp://127.0.0.1:{}", env.getProperty("server.port"));
 
     }
-
 }
