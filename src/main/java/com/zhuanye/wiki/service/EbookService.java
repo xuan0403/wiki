@@ -5,7 +5,7 @@ import com.zhuanye.wiki.domain.EbookExample;
 import com.zhuanye.wiki.mapper.EbookMapper;
 import com.zhuanye.wiki.req.EbookReq;
 import com.zhuanye.wiki.resp.EbookResp;
-import org.springframework.beans.BeanUtils;
+import com.zhuanye.wiki.util.CopyUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -26,11 +26,15 @@ public class EbookService {
 
         List<EbookResp> respList=new ArrayList<>();
         for (Ebook ebook : ebookList) {
-            EbookResp ebookResp = new EbookResp();
+            //EbookResp ebookResp = new EbookResp();
            /* ebookResp.setId(ebook.getId());*/  //此写法较为麻烦
-            BeanUtils.copyProperties(ebook,ebookResp);  //BeanUtils是spring提供的一种较为简单的方法，从ebook拷贝到ebookResp，实现对象的复制
-            respList.add(ebookResp);
+            //BeanUtils.copyProperties(ebook,ebookResp);  //BeanUtils是spring提供的一种较为简单的方法，从ebook拷贝到ebookResp，实现对象的复制
+           //对象复制
+            //EbookResp ebookResp = CopyUtil.copy(ebook, EbookResp.class);
+            //respList.add(ebookResp);
         }
-        return respList;
+        //列表复制
+        List<EbookResp> list = CopyUtil.copyList(ebookList, EbookResp.class);
+        return list;
     }
 }
