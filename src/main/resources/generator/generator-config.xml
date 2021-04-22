@@ -40,7 +40,7 @@
                              type="XMLMAPPER"/>
 
         <!--<table tableName="demo" domainObjectName="Demo"/>-->
-        <table tableName="ebook"/>  <!--domainObjectName="Ebook"也可以不写-->
+        <table tableName="ebook"/>  <!--domainObjectName="EbookReq"也可以不写-->
         <!--<table tableName="category"/>-->
         <!--<table tableName="doc"/>-->
         <!--<table tableName="content"/>-->

@@ -1,7 +1,8 @@
 package com.zhuanye.wiki.controller;
 
-import com.zhuanye.wiki.domain.Ebook;
+import com.zhuanye.wiki.req.EbookReq;
 import com.zhuanye.wiki.resp.CommonResp;
+import com.zhuanye.wiki.resp.EbookResp;
 import com.zhuanye.wiki.service.EbookService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,14 +22,22 @@ public class EbookController {
 
 
     /*@GetMapping("/list")
-    public List<Ebook> list(){
+    public List<EbookReq> list(){
         return ebookService.list();
     }*/
 
+    /*@GetMapping("/list")
+    public CommonResp list(String name){  //参数名字可以自动映射，如果参数名字很多，需要将所有参数封装成一个类
+        CommonResp<List<EbookReq>> resp = new CommonResp<>();//这里的凡星是实际返回业务数据的类型，及content的类型
+        List<EbookReq> list= ebookService.list(name);
+        resp.setContent(list);            //在CommonResp类里success默认的是true
+        return resp;
+    }*/
+
     @GetMapping("/list")
-    public CommonResp list(){
-        CommonResp<List<Ebook>> resp = new CommonResp<>();//这里的凡星是实际返回业务数据的类型，及content的类型
-        List<Ebook> list= ebookService.list();
+    public CommonResp list(EbookReq req){  //需要将所有参数封装成一个类
+        CommonResp<List<EbookResp>> resp = new CommonResp<>();//这里的凡星是实际返回业务数据的类型，及content的类型
+        List<EbookResp> list= ebookService.list(req);
         resp.setContent(list);            //在CommonResp类里success默认的是true
         return resp;
     }
