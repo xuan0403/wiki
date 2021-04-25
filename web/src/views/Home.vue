@@ -47,7 +47,7 @@
             :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }"
     >
       <!--电子书列表显示-->
-      <a-list item-layout="vertical" size="large" :pagigrid="{ gutter: 20, column: 3 }" :data-source="ebooks">
+      <a-list item-layout="vertical" size="large" :grid="{ gutter: 20, column: 3 }" :data-source="ebooks">
         <!--此item代表一个个的电子书，他会自动循环里面的ebooks，将每一个电子书设置成item变量-->
         <template #renderItem="{ item }">
           <!--使用item.xxx去访问电子书的数据-->
@@ -117,7 +117,7 @@ export default defineComponent({
     onMounted(function () {
       console.log("onMounted");
       //初始化的逻辑都写到onMounted方法里，setup就放一些参数定义、方法定义
-      axios.get("http://localhost:8880/ebook/list?name=Spring").then(function (response) { //从response里把电子书对应数据拿出来
+      axios.get("http://localhost:8880/ebook/list").then(function (response) { //从response里把电子书对应数据拿出来
         const data=response.data;  //data=CommonResp  在response里面有一个data，这个data就对应的是后端CommonResp的数据结构
         ebooks.value=data.content             //content对应电子书列表，要把内容显示到页面上，需要定义一个变量
         //ebooks1.books=data.content
@@ -148,3 +148,14 @@ export default defineComponent({
   },
 });
 </script>
+
+<!--scope表示加的样式只在当前组件起作用-->
+<style scoped>
+  .ant-avatar {
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    border-radius: 8%;
+    margin: 5px 0;
+  }
+</style>
