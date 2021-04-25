@@ -56,12 +56,14 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import TheHeader from '@/components/the-header.vue'; // @ is an alias to /src
+import TheHeader from '@/components/the-header.vue';
+import TheFooter from '@/components/the-footer.vue'; // @ is an alias to /src
 
 export default defineComponent({
   name: 'Home',
   components: {
       TheHeader,
+      TheFooter,
   },
 });
 </script>
