@@ -47,35 +47,25 @@
             :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }"
     >
       <!--电子书列表显示-->
-      <a-list item-layout="vertical" size="large" :pagination="pagination" :data-source="listData">
-        <template #footer>
-          <div>
-            <b>ant design vue</b>
-            footer part
-          </div>
-        </template>
+      <a-list item-layout="vertical" size="large" :pagigrid="{ gutter: 20, column: 3 }" :data-source="ebooks">
+        <!--此item代表一个个的电子书，他会自动循环里面的ebooks，将每一个电子书设置成item变量-->
         <template #renderItem="{ item }">
-          <a-list-item key="item.title">
+          <!--使用item.xxx去访问电子书的数据-->
+          <a-list-item key="item.name">
             <template #actions>
-          <span v-for="{ type, text } in actions" :key="type">
-            <component v-bind:is="type" style="margin-right: 8px" />
-            {{ text }}
-          </span>
-            </template>
-            <template #extra>
-              <img
-                      width="272"
-                      alt="logo"
-                      src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
-              />
+                <span v-for="{ type, text } in actions" :key="type">
+                  <component v-bind:is="type" style="margin-right: 8px" />
+                  {{ text }}
+                </span>
             </template>
             <a-list-item-meta :description="item.description">
               <template #title>
-                <a :href="item.href">{{ item.title }}</a>
+                <!--页面跳转-->
+                <a :href="item.href">{{ item.name }}</a>
               </template>
-              <template #avatar><a-avatar :src="item.avatar" /></template>
+              <!--图标-->
+              <template #avatar><a-avatar :src="item.cover" /></template>
             </a-list-item-meta>
-            {{ item.content }}
           </a-list-item>
         </template>
       </a-list>
