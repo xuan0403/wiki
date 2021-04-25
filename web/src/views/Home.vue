@@ -3,8 +3,6 @@
     <a-layout-sider width="200" style="background: #fff">
       <a-menu
               mode="inline"
-              v-model:selectedKeys="selectedKeys2"
-              v-model:openKeys="openKeys"
               :style="{ height: '100%', borderRight: 0 }"
       >
         <a-sub-menu key="sub1">
@@ -58,9 +56,17 @@
 import { defineComponent } from 'vue';
 import TheHeader from '@/components/the-header.vue';
 import TheFooter from '@/components/the-footer.vue'; // @ is an alias to /src
+import axios from 'axios';
+import {response} from "express";
 
 export default defineComponent({
   name: 'Home',
+  setup(){
+    console.log("setup");
+    axios.get("http://localhost:8880/ebook/list?name=Spring").then(function (response) {
+      console.log(response);
+    })
+  },
   components: {
       TheHeader,
       TheFooter,
