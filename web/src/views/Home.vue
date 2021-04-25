@@ -117,7 +117,7 @@ export default defineComponent({
     onMounted(function () {
       console.log("onMounted");
       //初始化的逻辑都写到onMounted方法里，setup就放一些参数定义、方法定义
-      axios.get("http://127.0.0.1:8880/ebook/list").then(function (response) { //从response里把电子书对应数据拿出来
+      axios.get("http://127.0.0.1:8080/ebook/list").then(function (response) { //从response里把电子书对应数据拿出来
         const data=response.data;  //data=CommonResp  在response里面有一个data，这个data就对应的是后端CommonResp的数据结构
         ebooks.value=data.content             //content对应电子书列表，要把内容显示到页面上，需要定义一个变量
         //ebooks1.books=data.content
