@@ -2,18 +2,7 @@
 <!--不变的部分写在App.vue，变化的部分写在Home.vue，此变化部分在App.vue里写为 <router-view/>-->
 <template>
   <a-layout id="components-layout-demo-top-side-2">
-    <a-layout-header class="header">
-      <a-menu
-              theme="dark"
-              mode="horizontal"
-              v-model:selectedKeys="selectedKeys1"
-              :style="{ lineHeight: '64px' }"
-      >
-        <a-menu-item key="1">nav 1</a-menu-item>
-        <a-menu-item key="2">nav 2</a-menu-item>
-        <a-menu-item key="3">nav 3</a-menu-item>
-      </a-menu>
-    </a-layout-header>
+      <the-header></the-header>
       <router-view/>
       <a-layout-footer style="text-align: center">
           wiki知识库
@@ -21,6 +10,18 @@
   </a-layout>
 </template>
 
+<script lang="ts">
+    import { defineComponent } from 'vue';
+    //引入组件
+    import TheHeader from '@/components/the-header.vue';
+
+    export default defineComponent({
+        name: 'app',
+        components: {
+            TheHeader,
+    },
+    });
+</script>
 
 <style>
     #components-layout-demo-top-side-2 .logo {
