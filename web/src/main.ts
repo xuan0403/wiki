@@ -20,5 +20,5 @@ for (const i in icons) {
 }
 
 /*打印日志环境，使用process.env.xxx读环境变量，xxx是配置文件里的名称*/
-console.log('环境：', process.env.NODE_ENV);
-console.log('服务端：', process.env.VUE_APP_SERVER);
+/*console.log('环境：', process.env.NODE_ENV);
+console.log('服务端：', process.env.VUE_APP_SERVER);*/
