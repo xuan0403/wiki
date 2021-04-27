@@ -11,6 +11,25 @@ import axios from 'axios';
 //修改baseURL，此baseURL是axios自己的
 axios.defaults.baseURL = process.env.VUE_APP_SERVER;
 
+/**
+ * axios拦截器
+ */
+/*拦截请求*/
+axios.interceptors.request.use(function (config) {
+    console.log('请求参数：', config);
+    return config;
+}, error => {
+    return Promise.reject(error);
+});
+/*拦截返回*/
+axios.interceptors.response.use(function (response) {
+    console.log('返回结果：', response);
+    return response;
+}, error => {
+    console.log('返回错误：', error);
+    return Promise.reject(error);
+});
+
 
 const app = createApp(App);
 app.use(store).use(router).use(Antd).mount('#app');
