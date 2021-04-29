@@ -39,8 +39,9 @@ create table `ebook` (
                          primary key (`id`)
 ) engine=innodb default charset=utf8mb4 comment='电子书';
 
-insert into `ebook` (id, name, description) values (1, 'Spring Boot 入门教程', '零基础入门 Java 开发，企业级应用开发最佳首选框架');
+insert into `ebook` (id, name, description,category1_id, category2_id, cover,doc_count,view_count,vote_count) values (6, 'Spring Boot 入门教程', '零基础入门 Java 开发，企业级应用开发最佳首选框架',1, 2, '/image/cover1.jpg',1,2,3);
 insert into `ebook` (id, name, description) values (2, 'Vue 入门教程', '零基础入门 Vue 开发，企业级应用开发最佳首选框架');
 insert into `ebook` (id, name, description) values (3, 'Python 入门教程', '零基础入门 Python 开发，企业级应用开发最佳首选框架');
 insert into `ebook` (id, name, description) values (4, 'Mysql 入门教程', '零基础入门 Mysql 开发，企业级应用开发最佳首选框架');
 insert into `ebook` (id, name, description) values (5, 'Oracle 入门教程', '零基础入门 Oracle 开发，企业级应用开发最佳首选框架');
+insert into `ebook` (category1_id, category2_id, cover,doc_count,view_count,vote_count) values (1, 2, '/image/cover1.jpg',1,2,3);
