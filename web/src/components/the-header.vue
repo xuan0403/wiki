@@ -5,9 +5,15 @@
                 mode="horizontal"
                 :style="{ lineHeight: '64px' }"
         >
-            <a-menu-item key="1">nav 111</a-menu-item>
-            <a-menu-item key="2">nav 2</a-menu-item>
-            <a-menu-item key="3">nav 3</a-menu-item>
+            <a-menu-item key="/"> <!--key随便起，只要不重复即可-->
+                <router-link to="/">首页</router-link>
+            </a-menu-item>
+            <a-menu-item key="/admin/admin-ebook">
+                <router-link to="/admin/admin-ebook">电子书管理</router-link>
+            </a-menu-item>
+            <a-menu-item key="/about">
+                <router-link to="/about">关于我们</router-link>
+            </a-menu-item>
         </a-menu>
     </a-layout-header>
 </template>
