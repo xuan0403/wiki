@@ -150,10 +150,21 @@
         const modalLoading = ref(false);
         const handleModalOk = () => {
             modalLoading.value = true;
-            setTimeout(() => {
-                modalVisible.value = false;
-                modalLoading.value = false;
-            }, 2000);
+            //此ebook代表绑定到表单的ebook
+            axios.post("/ebook/save", ebook.value).then((response) => {
+                const data = response.data;  //data=CommonResp
+                if(data.success){
+                    modalVisible.value = false;
+                    modalLoading.value = false;
+
+                    //重新加载列表
+                    handleQuery({
+                        //page: 1,//初始查第一页
+                        page: pagination.value.current,  //重新查当前分页组件所在的页码
+                        size: pagination.value.pageSize
+                    });
+                }
+            });
         };
 
         /*编辑*/

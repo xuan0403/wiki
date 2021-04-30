@@ -1,7 +1,7 @@
 package com.zhuanye.wiki.resp;
 
 //正常情况没有密码等字段，一一映射EbookResp=Ebook
-public class EbookResp {
+public class EbookQueryResp {
     private Long id;
 
     private String name;
