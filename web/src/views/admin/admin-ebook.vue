@@ -17,7 +17,7 @@
         <template v-slot:action="{ text, record }">
           <!--a-space代表两个按钮之间有空格-->
           <a-space size="small">
-            <a-button type="primary" @click="edit">
+            <a-button type="primary" @click="edit(record)">
               编辑
             </a-button>
             <a-button type="danger">
@@ -35,7 +35,23 @@
             :confirm-loading="modalLoading"
             @ok="handleModalOk"
     >
-        <p>test</p>
+        <a-form :model="ebook" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
+            <a-form-item label="封面">
+                <a-input v-model:value="ebook.cover" />
+            </a-form-item>
+            <a-form-item label="名称">
+                <a-input v-model:value="ebook.name" />
+            </a-form-item>
+            <a-form-item label="分类一">
+                <a-input v-model:value="ebook.category1Id" />
+            </a-form-item>
+            <a-form-item label="分类二">
+                <a-input v-model:value="ebook.category2Id" />
+            </a-form-item>
+            <a-form-item label="描述">
+                <a-input v-model:value="ebook.desc" type="textarea" />
+            </a-form-item>
+        </a-form>
     </a-modal>
 </template>
 
@@ -129,6 +145,7 @@
       };
 
         //-------------表单-------------
+        const ebook=ref({});
         const modalVisible = ref(false);
         const modalLoading = ref(false);
         const handleModalOk = () => {
@@ -140,8 +157,11 @@
         };
 
         /*编辑*/
-        const edit=()=>{
+        //record对应表数据，any表示它是任何类型都可以，其实他就是一个json对象。将record赋值到刚定义的ebook这个响应式变量
+        //这样我们的表但就可以拿到当前点击的这一行的数据
+        const edit=(record: any)=>{
             modalVisible.value = true;
+            ebook.value=record;
         };
 
       //page,size要与PageReq一致
@@ -159,6 +179,7 @@
         loading,
         handleTableChange,
 
+        ebook,
         edit,
         modalVisible,
         modalLoading,
