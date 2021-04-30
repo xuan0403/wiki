@@ -88,19 +88,18 @@ import TheFooter from '@/components/the-footer.vue'; // @ is an alias to /src
 import axios from 'axios';
 import {response} from "express";
 
-const listData: any = [];
-
-for (let i = 0; i < 23; i++) {
-  listData.push({
-    href: 'https://www.antdv.com/',
-    title: `ant design vue part ${i}`,
-    avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-    description:
-            'Ant Design, a design language for background applications, is refined by Ant UED Team.',
-    content:
-            'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
-  });
-}
+// const listData: any = [];
+// for (let i = 0; i < 23; i++) {
+//   listData.push({
+//     href: 'https://www.antdv.com/',
+//     title: `ant design vue part ${i}`,
+//     avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+//     description:
+//             'Ant Design, a design language for background applications, is refined by Ant UED Team.',
+//     content:
+//             'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
+//   });
+// }
 
 export default defineComponent({
   name: 'Home',
@@ -115,9 +114,14 @@ export default defineComponent({
     //生命周期函数
     onMounted(function () {
       //初始化的逻辑都写到onMounted方法里，setup就放一些参数定义、方法定义
-      axios.get("/ebook/list").then(function (response) { //从response里把电子书对应数据拿出来
+      axios.get("/ebook/list",{
+        params: {
+          page: 1,
+          size: 1000
+        }
+      }).then(function (response) { //从response里把电子书对应数据拿出来
         const data=response.data;  //data=CommonResp  在response里面有一个data，这个data就对应的是后端CommonResp的数据结构
-        ebooks.value=data.content             //content对应电子书列表，要把内容显示到页面上，需要定义一个变量
+        ebooks.value=data.content.list             //content对应电子书列表，要把内容显示到页面上，需要定义一个变量
         //ebooks1.books=data.content
         //console.log(response);
       });
@@ -126,7 +130,7 @@ export default defineComponent({
     return {
       ebooks,
       //ebooks2: toRef(ebooks1,"books")
-      listData,
+      //listData,
       pagination: {
         onChange: (page:any) => {
           console.log(page);
