@@ -10,6 +10,7 @@ import com.zhuanye.wiki.req.EbookSaveReq;
 import com.zhuanye.wiki.resp.EbookQueryResp;
 import com.zhuanye.wiki.resp.PageResp;
 import com.zhuanye.wiki.util.CopyUtil;
+import com.zhuanye.wiki.util.SnowFlake;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,9 @@ public class EbookService {
 
     @Resource  /*jdk自带*/
     private EbookMapper ebookMapper;
+
+    @Resource  /*jdk自带*/
+    private SnowFlake snowFlake;
 
     public PageResp<EbookQueryResp> list(EbookQueryReq req){
         EbookExample ebookExample = new EbookExample();
@@ -64,6 +68,8 @@ public class EbookService {
     public void save(EbookSaveReq req){
         Ebook ebook=CopyUtil.copy(req,Ebook.class);
         if(ObjectUtils.isEmpty(req.getId())){
+            //使用雪花算法自己生成一个id
+            ebook.setId(snowFlake.nextId());
             ebookMapper.insert(ebook);
         }
         else {
