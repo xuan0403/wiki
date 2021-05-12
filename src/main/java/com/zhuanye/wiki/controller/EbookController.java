@@ -49,4 +49,13 @@ public class EbookController {
         return resp;
     }
 
+
+    //电子书删除
+    @DeleteMapping("/delete/{id}")
+    public CommonResp delete(@PathVariable Long id){  //需要将所有参数封装成一个类
+        CommonResp resp = new CommonResp<>();//这里的凡星是实际返回业务数据的类型，及content的类型
+        ebookService.delete(id);
+        return resp;
+    }
+
 }
