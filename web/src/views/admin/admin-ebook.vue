@@ -176,13 +176,13 @@
         /*编辑*/
         //record对应表数据，any表示它是任何类型都可以，其实他就是一个json对象。将record赋值到刚定义的ebook这个响应式变量
         //这样我们的表但就可以拿到当前点击的这一行的数据
-        const edit=(record: any)=>{
+        const edit = (record: any) => {
             modalVisible.value = true;
             ebook.value=record;
         };
 
         /*新增*/
-        const add=()=>{
+        const add = () => {
             modalVisible.value = true;
             ebook.value={};
         };
@@ -196,15 +196,18 @@
       });
 
       return {
+          //表格
         ebooks,
         pagination,
         columns,
         loading,
         handleTableChange,
 
+          //方法
         edit,
         add,
 
+          //表单
         ebook,
         modalVisible,
         modalLoading,

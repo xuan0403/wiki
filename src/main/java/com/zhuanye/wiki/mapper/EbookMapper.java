@@ -1,7 +1,7 @@
 package com.zhuanye.wiki.mapper;
 
-import com.zhuanye.wiki.domain.Ebook;
 import com.zhuanye.wiki.domain.EbookExample;
+import com.zhuanye.wiki.domain.Ebook;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

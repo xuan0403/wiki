@@ -1,7 +1,7 @@
 package com.zhuanye.wiki.controller;
 
-import com.zhuanye.wiki.domain.Demo;
 import com.zhuanye.wiki.service.DemoService;
+import com.zhuanye.wiki.domain.Demo;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

@@ -2,10 +2,10 @@ package com.zhuanye.wiki.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.zhuanye.wiki.req.EbookQueryReq;
 import com.zhuanye.wiki.domain.Ebook;
 import com.zhuanye.wiki.domain.EbookExample;
 import com.zhuanye.wiki.mapper.EbookMapper;
-import com.zhuanye.wiki.req.EbookQueryReq;
 import com.zhuanye.wiki.req.EbookSaveReq;
 import com.zhuanye.wiki.resp.EbookQueryResp;
 import com.zhuanye.wiki.resp.PageResp;

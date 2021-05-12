@@ -1,7 +1,7 @@
 package com.zhuanye.wiki.service;
 
-import com.zhuanye.wiki.domain.Demo;
 import com.zhuanye.wiki.mapper.DemoMapper;
+import com.zhuanye.wiki.domain.Demo;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

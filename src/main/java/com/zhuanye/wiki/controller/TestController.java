@@ -1,7 +1,7 @@
 package com.zhuanye.wiki.controller;
 
-import com.zhuanye.wiki.domain.Test;
 import com.zhuanye.wiki.service.TestService;
+import com.zhuanye.wiki.domain.Test;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
