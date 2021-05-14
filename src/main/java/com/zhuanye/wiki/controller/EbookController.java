@@ -45,7 +45,7 @@ public class EbookController {
 
     //一般保存类的、更新类的接口，都用PostMapping,Post请求要用RequestBody注解
     @PostMapping("/save")
-    public CommonResp save(@RequestBody  EbookSaveReq req){  //需要将所有参数封装成一个类
+    public CommonResp save(@Valid @RequestBody  EbookSaveReq req){  //需要将所有参数封装成一个类
         CommonResp resp = new CommonResp<>();//这里的凡星是实际返回业务数据的类型，及content的类型
         ebookService.save(req);
         return resp;
