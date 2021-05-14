@@ -1,14 +1,15 @@
 package com.zhuanye.wiki.controller;
 
 import com.zhuanye.wiki.req.EbookQueryReq;
-import com.zhuanye.wiki.resp.CommonResp;
-import com.zhuanye.wiki.service.EbookService;
 import com.zhuanye.wiki.req.EbookSaveReq;
+import com.zhuanye.wiki.resp.CommonResp;
 import com.zhuanye.wiki.resp.EbookQueryResp;
 import com.zhuanye.wiki.resp.PageResp;
+import com.zhuanye.wiki.service.EbookService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 
 //@Controller //用来返回页面
 @RestController  //一般用来返回字符串，因为采用前后端分离，所以一般是用不到@Controller的
@@ -34,7 +35,8 @@ public class EbookController {
     }*/
 
     @GetMapping("/list")
-    public CommonResp list(EbookQueryReq req){  //需要将所有参数封装成一个类
+    //@Valid表示此组参数开启校验规则，对应的规则就是里面的这些注解
+    public CommonResp list(@Valid EbookQueryReq req){  //需要将所有参数封装成一个类
         CommonResp<PageResp<EbookQueryResp>> resp = new CommonResp<>();//这里的凡星是实际返回业务数据的类型，及content的类型
         PageResp<EbookQueryResp> list= ebookService.list(req);
         resp.setContent(list);            //在CommonResp类里success默认的是true
