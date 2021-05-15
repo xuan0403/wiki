@@ -40,11 +40,13 @@
                              type="XMLMAPPER"/>
 
         <!--<table tableName="demo" domainObjectName="Demo"/>-->
-        <table tableName="ebook"/>  <!--domainObjectName="EbookQueryReq"也可以不写-->
+          <!--domainObjectName="EbookQueryReq"也可以不写-->
         <!--<table tableName="category"/>-->
         <!--<table tableName="doc"/>-->
         <!--<table tableName="content"/>-->
         <!--<table tableName="user"/>-->
         <!--<table tableName="ebook_snapshot"/>-->
+        <!--<table tableName="ebook"/>-->
+        <table tableName="category"/>
     </context>
 </generatorConfiguration>
