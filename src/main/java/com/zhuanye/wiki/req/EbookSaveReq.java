@@ -2,6 +2,7 @@ package com.zhuanye.wiki.req;
 
 import javax.validation.constraints.NotNull;
 
+//请求类，可以对请求类增加参数校验（与resp包下的返回类的区别，返回类没有注解）
 public class EbookSaveReq {
     private Long id;
 
