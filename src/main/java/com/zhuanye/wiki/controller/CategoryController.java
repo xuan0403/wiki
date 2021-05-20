@@ -2,14 +2,15 @@ package com.zhuanye.wiki.controller;
 
 import com.zhuanye.wiki.req.CategoryQueryReq;
 import com.zhuanye.wiki.req.CategorySaveReq;
-import com.zhuanye.wiki.resp.CommonResp;
 import com.zhuanye.wiki.resp.CategoryQueryResp;
+import com.zhuanye.wiki.resp.CommonResp;
 import com.zhuanye.wiki.resp.PageResp;
 import com.zhuanye.wiki.service.CategoryService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.util.List;
 
 //@Controller //用来返回页面
 @RestController  //一般用来返回字符串，因为采用前后端分离，所以一般是用不到@Controller的
@@ -33,6 +34,15 @@ public class CategoryController {
         resp.setContent(list);            //在CommonResp类里success默认的是true
         return resp;
     }*/
+    @GetMapping("/all")
+    //@Valid表示此组参数开启校验规则，对应的规则就是里面的这些注解
+    public CommonResp all(){  //需要将所有参数封装成一个类
+        CommonResp<List<CategoryQueryResp>> resp = new CommonResp<>();//这里的凡星是实际返回业务数据的类型，及content的类型
+        List<CategoryQueryResp> list= categoryService.all();
+        resp.setContent(list);            //在CommonResp类里success默认的是true
+        return resp;
+    }
+
 
     @GetMapping("/list")
     //@Valid表示此组参数开启校验规则，对应的规则就是里面的这些注解

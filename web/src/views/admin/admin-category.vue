@@ -14,7 +14,7 @@
               </a-form-item>
               <a-form-item>
                   <!--{page : 1,size : pagination.pageSize})为json对象-->
-                  <a-button type="primary" @click="handleQuery({page : 1,size : pagination.pageSize})">
+                  <a-button type="primary" @click="handleQuery()">
                       查询
                   </a-button>
               </a-form-item>
@@ -30,9 +30,8 @@
               :columns="columns"
               :row-key="record => record.id"
               :data-source="categorys"
-              :pagination="pagination"
               :loading="loading"
-              @change="handleTableChange"
+              :pagination="false"
       >
         <!--定义渲染-->
         <template #cover="{ text: cover }">
@@ -96,12 +95,7 @@
       param.value = {};
       /*定义分类*/
       const categorys = ref();
-      /*定义分页*/
-      const pagination = ref({
-        current: 1,
-        pageSize: 5,
-        total: 0
-      });
+
       const loading = ref(false);
 
       const columns = [
@@ -129,24 +123,15 @@
        * 数据查询
        **/
       /*用axios调用后端的接口*/
-      const handleQuery = (params: any) => {
+      const handleQuery = () => {
         loading.value = true;
-        axios.get("/category/list", {
-          params:{
-            page: params.page,
-            size: params.size,
-            name: param.value.name
-          }
-        }).then((response) => {
+        axios.get("/category/all").then((response) => {
           loading.value = false;
           const data = response.data;
 
           if(data.success)
           {
-              categorys.value = data.content.list;
-              // 重置分页按钮
-              pagination.value.current = params.page;
-              pagination.value.total = data.content.total;
+              categorys.value = data.content;
           }else{
               message.error(data.message);
           }
@@ -154,16 +139,6 @@
         });
       };
 
-      /**
-       * 表格点击页码时触发
-       */
-      const handleTableChange = (pagination: any) => {
-          console.log("看看自带的分页参数都有啥：" + pagination);
-          handleQuery({
-              page: pagination.current,
-              size: pagination.pageSize
-          });
-      };
 
         //-------------表单-------------
         const category=ref({});
@@ -178,11 +153,7 @@
                 if(data.success){
                     modalVisible.value = false;
                     //重新加载列表
-                    handleQuery({
-                        //page: 1,//初始查第一页
-                        page: pagination.value.current,  //重新查当前分页组件所在的页码
-                        size: pagination.value.pageSize
-                    });
+                    handleQuery();
                 }
                 else {
                     message.error(data.message);
@@ -210,31 +181,22 @@
                 const data = response.data;  //data=CommonResp
                 if(data.success){
                     //重新加载列表
-                    handleQuery({
-                        //page: 1,//初始查第一页
-                        page: pagination.value.current,  //重新查当前分页组件所在的页码
-                        size: pagination.value.pageSize
-                    });
+                    handleQuery();
                 }
             });
         };
 
       //page,size要与PageReq一致
       onMounted(() => {
-        handleQuery({
-          page: 1,//初始查第一页
-          size: pagination.value.pageSize
-        });
+        handleQuery();
       });
 
       return {
           //表格
         param,
         categorys,
-        pagination,
         columns,
         loading,
-        handleTableChange,
         handleQuery,
 
           //方法

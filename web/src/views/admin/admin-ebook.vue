@@ -200,10 +200,10 @@
             modalLoading.value = true;
             //此ebook代表绑定到表单的ebook
             axios.post("/ebook/save", ebook.value).then((response) => {
-                modalLoading.value=false;
                 const data = response.data;  //data=CommonResp
                 if(data.success){
                     modalVisible.value = false;
+                    modalLoading.value=false;
                     //重新加载列表
                     handleQuery({
                         //page: 1,//初始查第一页
