@@ -38,6 +38,13 @@
         <template #cover="{ text: cover }">
           <img v-if="cover" :src="cover" alt="avatar" />
         </template>
+          <!--新增渲染，因为分类不是普通字段，它是一种组合，是自定义的显示方式，渲染的名字是category，它会自动带上两个参数text, record -->
+          <!--如果不带具体字段渲染，text和record是一样的-->
+          <template v-slot:category="{ text, record }">
+             <!-- {{text}}}**************{{record}}}-->
+              <!--显示的值，定义getCategoryName方法，通过传进来的id去得到它对应的名称。先获得一级分类的名称，再获得二级分类的名称，显示出来加/-->
+              <span>{{ getCategoryName(record.category1Id) }} / {{ getCategoryName(record.category2Id) }}</span>
+          </template>
         <template v-slot:action="{ text, record }">
           <!--a-space代表两个按钮之间有空格-->
           <a-space size="small">
@@ -75,11 +82,14 @@
             <a-form-item label="名称">
                 <a-input v-model:value="ebook.name" />
             </a-form-item>
-            <a-form-item label="分类一">
-                <a-input v-model:value="ebook.category1Id" />
-            </a-form-item>
-            <a-form-item label="分类二">
-                <a-input v-model:value="ebook.category2Id" />
+            <!--将分类变为级联组件，级联组件要绑定value，绑定的value实际上是一个数组-->
+            <a-form-item label="分类">
+                <!--重新定义一个变量categoryIds，这是一个新的响应式变量。一般下拉框会有显示的值和实际的值-->
+                <a-cascader
+                        v-model:value="categoryIds"
+                        :field-names="{ label: 'name', value: 'id', children: 'children' }"
+                        :options="level1"
+                />
             </a-form-item>
             <a-form-item label="描述">
                 <a-input v-model:value="ebook.description" type="textarea" />
@@ -120,15 +130,10 @@
           title: '名称',
           dataIndex: 'name'
         },
-        {
-          title: '分类一',
-          key: 'category1Id',
-          dataIndex: 'category1Id'
-        },
-        {
-          title: '分类二',
-          dataIndex: 'category2Id'
-        },
+          {
+              title: '分类',
+              slots: { customRender: 'category' }
+          },
           {
               title: '描述',
               dataIndex: 'description'
@@ -192,26 +197,30 @@
           });
       };
 
-        //-------------表单-------------
-        const ebook=ref({});
+        // -------- 表单 ---------
+        /**
+         * 数组，[100, 101]对应：前端开发 / Vue
+         */
+        const categoryIds = ref();
+        const ebook = ref();
         const modalVisible = ref(false);
         const modalLoading = ref(false);
         const handleModalOk = () => {
             modalLoading.value = true;
-            //此ebook代表绑定到表单的ebook
+            ebook.value.category1Id = categoryIds.value[0];
+            ebook.value.category2Id = categoryIds.value[1];
             axios.post("/ebook/save", ebook.value).then((response) => {
-                const data = response.data;  //data=CommonResp
-                if(data.success){
+                modalLoading.value = false;
+                const data = response.data; // data = commonResp
+                if (data.success) {
                     modalVisible.value = false;
-                    modalLoading.value=false;
-                    //重新加载列表
+
+                    // 重新加载列表
                     handleQuery({
-                        //page: 1,//初始查第一页
-                        page: pagination.value.current,  //重新查当前分页组件所在的页码
-                        size: pagination.value.pageSize
+                        page: pagination.value.current,
+                        size: pagination.value.pageSize,
                     });
-                }
-                else {
+                } else {
                     message.error(data.message);
                 }
             });
@@ -223,6 +232,7 @@
         const edit = (record: any) => {
             modalVisible.value = true;
             ebook.value=Tool.copy(record);
+            categoryIds.value = [ebook.value.category1Id, ebook.value.category2Id]
         };
 
         /*新增*/
@@ -246,8 +256,55 @@
             });
         };
 
-      //page,size要与PageReq一致
+        const level1 =  ref();
+        //定义普通变量
+        let categorys: any;
+        /**
+         * 查询所有分类
+         **/
+        const handleQueryCategory = () => {
+            loading.value = true;
+            axios.get("/category/all").then((response) => {
+                loading.value = false;
+                const data = response.data;
+                if (data.success) {
+                    //赋值
+                    categorys = data.content;
+                    console.log("原始数组：", categorys);
+
+                    level1.value = [];
+                    level1.value = Tool.array2Tree(categorys, 0);
+                    console.log("树形结构：", level1.value);
+
+                    // 加载完分类后，再加载电子书，否则如果分类树加载很慢，则电子书渲染会报错
+                    handleQuery({
+                        page: 1,
+                        size: pagination.value.pageSize,
+                    });
+                } else {
+                    message.error(data.message);
+                }
+            });
+        };
+
+        //循环，循环刚刚定义的变量categorys
+        const getCategoryName = (cid: number) => {
+            // console.log(cid)
+            let result = "";
+            categorys.forEach((item: any) => {
+                if (item.id === cid) {
+                    // return item.name; // 注意，这里直接return不起作用
+                    result = item.name;
+                }
+            });
+            return result;
+        };
+
+
+        //page,size要与PageReq一致
       onMounted(() => {
+          //初始的时候应该把所有的分类也查出来，所以要执行handleQueryCategory()方法
+        handleQueryCategory();
         handleQuery({
           page: 1,//初始查第一页
           size: pagination.value.pageSize
@@ -263,6 +320,7 @@
         loading,
         handleTableChange,
         handleQuery,
+        getCategoryName,
 
           //方法
         edit,
@@ -273,7 +331,9 @@
         ebook,
         modalVisible,
         modalLoading,
-        handleModalOk
+        handleModalOk,
+        categoryIds,
+        level1
 
       }
     }
