@@ -29,7 +29,7 @@
       <a-table
               :columns="columns"
               :row-key="record => record.id"
-              :data-source="categorys"
+              :data-source="level1"
               :loading="loading"
               :pagination="false"
       >
@@ -119,7 +119,20 @@
         }
       ];
 
-      /**
+        /**
+         * 一级分类树，children属性就是二级分类，支持无限级
+         * [{
+         *   id: "",
+         *   name: "",
+         *   children: [{
+         *     id: "",
+         *     name: "",
+         *   }]
+         * }]
+         */
+        const level1 = ref(); // 一级分类树，children属性就是二级分类
+        level1.value = [];
+        /**
        * 数据查询
        **/
       /*用axios调用后端的接口*/
@@ -132,6 +145,12 @@
           if(data.success)
           {
               categorys.value = data.content;
+              //打印为更改为树形结构前数据
+              console.log("原始数组：" ,categorys.value);
+              //将level1初始化为一个空数组，再给他赋值为一个树形结构，通过array2Tree方法转换
+              level1.value = [];
+              level1.value = Tool.array2Tree(categorys.value, 0);
+              console.log("树形结构：", level1);
           }else{
               message.error(data.message);
           }
@@ -194,7 +213,8 @@
       return {
           //表格
         param,
-        categorys,
+        level1,
+        //categorys,
         columns,
         loading,
         handleQuery,
