@@ -41,7 +41,6 @@
           <!--新增渲染，因为分类不是普通字段，它是一种组合，是自定义的显示方式，渲染的名字是category，它会自动带上两个参数text, record -->
           <!--如果不带具体字段渲染，text和record是一样的-->
           <template v-slot:category="{ text, record }">
-             <!-- {{text}}}**************{{record}}}-->
               <!--显示的值，定义getCategoryName方法，通过传进来的id去得到它对应的名称。先获得一级分类的名称，再获得二级分类的名称，显示出来加/-->
               <span>{{ getCategoryName(record.category1Id) }} / {{ getCategoryName(record.category2Id) }}</span>
           </template>
