@@ -72,7 +72,20 @@
                 <a-input v-model:value="category.name" />
             </a-form-item>
             <a-form-item label="父分类">
-                <a-input v-model:value="category.parent" />
+                <!--下拉框-->
+                <a-select
+                        v-model:value="category.parent"
+                        ref="select"
+                >
+                    <a-select-option :value="0">
+                        无
+                    </a-select-option>
+                    <!--使用v-for循环，循环level1，level1就是一级分类，循环需要对应一个key，value与key是一样的，都是c.id-->
+                    <a-select-option v-for="c in level1" :key="c.id" :value="c.id" :disabled="category.id === c.id">
+                        <!--在节点中间要去使用变量的话，应该使用两个大括号-->
+                        {{c.name}}
+                    </a-select-option>
+                </a-select>
             </a-form-item>
             <a-form-item label="顺序">
                 <a-input v-model:value="category.sort" />
