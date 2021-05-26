@@ -126,27 +126,15 @@ export default defineComponent({
 
     //定义变量，初始时显示welcome
     const isShowWelcome =  ref(true);
+    let categoryId2 = 0;
 
-    //测试方法，点击某一菜单，输出日志
-    const handleClick = (value: any) => {
-      //console.log("menu click",value)
-      /*if(value.key == 'welcome'){
-        isShowWelcome.value=true;
-      }else {
-        isShowWelcome.value=false;
-      }*/
-      isShowWelcome.value = value.key === 'welcome';
-    };
-
-    //生命周期函数
-    onMounted(function () {
-      //初始应该加载所有的分类
-      handleQueryCategory();
+    const handleQueryEbook =() => {
       //初始化的逻辑都写到onMounted方法里，setup就放一些参数定义、方法定义
       axios.get("/ebook/list",{
         params: {
           page: 1,
-          size: 1000
+          size: 1000,
+          categoryId2: categoryId2
         }
       }).then(function (response) { //从response里把电子书对应数据拿出来
         const data=response.data;  //data=CommonResp  在response里面有一个data，这个data就对应的是后端CommonResp的数据结构
@@ -154,6 +142,30 @@ export default defineComponent({
         //ebooks1.books=data.content
         //console.log(response);
       });
+    };
+
+
+    //测试方法，点击某一菜单，输出日志
+    const handleClick = (value: any) => {
+      // console.log("menu click", value)
+      if (value.key === 'welcome') {
+        isShowWelcome.value = true;
+      } else {
+        categoryId2 = value.key;
+        isShowWelcome.value = false;
+        handleQueryEbook();
+      }
+      // isShowWelcome.value = value.key === 'welcome';
+    };
+
+
+
+    //生命周期函数
+    onMounted(function () {
+      //初始应该加载所有的分类
+      handleQueryCategory();
+      //handleQueryEbook();
+
     });
 
     return {
