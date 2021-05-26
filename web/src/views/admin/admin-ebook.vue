@@ -301,15 +301,11 @@
             return result;
         };
 
-
         //page,size要与PageReq一致
       onMounted(() => {
           //初始的时候应该把所有的分类也查出来，所以要执行handleQueryCategory()方法
         handleQueryCategory();
-        handleQuery({
-          page: 1,//初始查第一页
-          size: pagination.value.pageSize
-        });
+
       });
 
       return {
