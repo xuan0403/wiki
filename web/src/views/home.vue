@@ -1,4 +1,4 @@
-<template>
+<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
   <a-layout>
     <a-layout-sider width="200" style="background: #fff">
       <a-menu
@@ -8,10 +8,11 @@
       >
         <!--欢迎菜单-->
         <a-menu-item key="welcome">
-          <router-link :to="'/'">
+          <!--router-link跳转到其他页面，当前页面切换不使用-->
+          <!--<router-link :to="'/'">-->
             <MailOutlined />
             <span>欢迎</span>
-          </router-link>
+          <!--</router-link>-->
         </a-menu-item>
         <!--循环level1，是一个树形结构，两级分类-->
         <a-sub-menu v-for="item in level1" :key="item.id">
@@ -30,8 +31,12 @@
     <a-layout-content
             :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }"
     >
+      <div class="welcome" v-show="isShowWelcome">
+        <h1>欢迎使用wiki知识库</h1>
+
+      </div>
       <!--电子书列表显示-->
-      <a-list item-layout="vertical" size="large" :grid="{ gutter: 20, column: 3 }" :data-source="ebooks">
+      <a-list v-show="!isShowWelcome" item-layout="vertical" size="large" :grid="{ gutter: 20, column: 3 }" :data-source="ebooks">
         <!--此item代表一个个的电子书，他会自动循环里面的ebooks，将每一个电子书设置成item变量-->
         <template #renderItem="{ item }">
           <!--使用item.xxx去访问电子书的数据-->
@@ -119,9 +124,18 @@ export default defineComponent({
       });
     };
 
+    //定义变量，初始时显示welcome
+    const isShowWelcome =  ref(true);
+
     //测试方法，点击某一菜单，输出日志
-    const handleClick = () => {
-      console.log("menu click")
+    const handleClick = (value: any) => {
+      //console.log("menu click",value)
+      /*if(value.key == 'welcome'){
+        isShowWelcome.value=true;
+      }else {
+        isShowWelcome.value=false;
+      }*/
+      isShowWelcome.value = value.key === 'welcome';
     };
 
     //生命周期函数
@@ -159,6 +173,7 @@ export default defineComponent({
       ],
       handleClick,
       level1,
+      isShowWelcome
     }
   }
 });
